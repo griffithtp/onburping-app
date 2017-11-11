@@ -41,7 +41,8 @@ const CompanyDetailsType = new GraphQLObjectType({
     legalForm: { type: GraphQLString },
     sicNaceCodes: { type: GraphQLString },
     people: { type: BrexPeopleType },
-    extraData: { type: new GraphQLList(GraphQLString) }
+    extraData: { type: new GraphQLList(GraphQLString) },
+    shareholders: { type: new GraphQLList(GraphQLString) }
   })
 });
 

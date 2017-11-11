@@ -44,6 +44,50 @@ const mutation = new GraphQLObjectType({
       resolve(parentValue, { email, password }, req) {
         return AuthService.login({email, password, req});
       }
+    },
+    companysearchname: {
+      type: new GraphQLList(CompanySearchType),
+      args: {
+        country: { type: GraphQLString },
+        name: { type: GraphQLString },
+        limit: { type: GraphQLInt }
+      },
+      resolve(parentValue, { country, name, limit}, req) {
+        return axios.get(brex_api_url + `api/v1/company/search/name/${country}/${name}?limit=${limit}`, brex_headers)
+          .then( (res) => {
+            return res.data;
+          })
+          .catch( err => console.log(err) );
+      }
+    },
+    companysearch: {
+      type: new GraphQLList(CompanySearchType),
+      args: {
+        country: { type: GraphQLString },
+        id: { type: GraphQLString },
+        limit: { type: GraphQLInt }
+      },
+      resolve(parentValue, { country, name, limit}, req) {
+        return axios.get(brex_api_url + `api/v1/company/search/number/${country}/${id}?limit=1`, brex_headers)
+          .then( (res) => {
+            return res.data;
+          })
+          .catch( err => console.log(err) );
+      }
+    },
+    company: {
+      type: CompanyDetailsType,
+      args: {
+        id: { type: GraphQLString },
+        dataset: { type: GraphQLString }
+      },
+      resolve(parentValue, { id, dataset}, req) {
+        return axios.get(brex_api_url + `api/v1/company/${id}/${dataset}`, brex_headers)
+          .then( (res) => {
+            return res.data;
+          })
+          .catch( err => console.log(err) );
+      }
     }
   }
 });

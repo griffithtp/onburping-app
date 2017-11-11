@@ -15,16 +15,5 @@ const CompanySearchType = new GraphQLObjectType({
     name: { type: GraphQLString },
   })
 });
-// const PartnerType = new GraphQLObjectType({
-//   name: 'PartnerType',
-//   fields: () => ({
-//     partner_id: { type: GraphQLString },
-//     company: {
-//       type: CompanyType
-//     },
-//     partner_products: { type: GraphQLString },
-//     partner_ref: { type: GraphQLString }
-//   })
-// });
 
 module.exports = CompanySearchType;

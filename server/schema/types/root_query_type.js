@@ -14,6 +14,9 @@ const brex_headers = {
   , 'Accept': 'application/json', 'user_key': `${brex_api_key}`}
 };
 
+const Shareholders = {
+  shareholders: [ "Peter Griffin", "Louis Griffin" ]
+}
 
 const RootQueryType = new GraphQLObjectType({
   name: 'RootQueryType',
@@ -37,7 +40,7 @@ const RootQueryType = new GraphQLObjectType({
           .catch( err => console.log(err) );
       }
     },
-    companysearch: {
+    companysearchname: {
       type: new GraphQLList(CompanySearchType),
       args: {
         country: { type: GraphQLString },
@@ -52,6 +55,31 @@ const RootQueryType = new GraphQLObjectType({
           .catch( err => console.log(err) );
       }
     },
+    companysearch: { // default search by registrationNumber
+      type: new GraphQLList(CompanyDetailsType),
+      args: {
+        country: { type: GraphQLString },
+        registrationNumber: { type: GraphQLString },
+        limit: { type: GraphQLInt }
+      },
+      resolve(parentValue, { country, registrationNumber, limit}, req) {
+        return axios.get(brex_api_url + `api/v1/company/search/number/${country}/${registrationNumber}?limit=1`, brex_headers)
+          .then( (res) => {
+            // return res.data;
+            // if (res.id) {
+            //   const result = axios.get(brex_api_url + `api/v1/company/${id}/${dataset}`, brex_headers)
+            //     .then( (companydetails) => {
+            //       return companydetails.data;
+            //       // return {...companydetails.data, ...Shareholders};
+            //     })
+            //     .catch( err => console.log(err) );
+            // }
+            // console.log(res.data);
+            return res.data;
+          })
+          .catch( err => console.log(err) );
+      }
+    },
     company: {
       type: CompanyDetailsType,
       args: {
@@ -59,11 +87,13 @@ const RootQueryType = new GraphQLObjectType({
         dataset: { type: GraphQLString }
       },
       resolve(parentValue, { id, dataset}, req) {
-        return axios.get(brex_api_url + `api/v1/company/${id}/${dataset}`, brex_headers)
+        const result = axios.get(brex_api_url + `api/v1/company/${id}/${dataset}`, brex_headers)
           .then( (res) => {
-            return res.data;
+            // console.log(res.data);
+            return {...res.data, ...Shareholders};
           })
           .catch( err => console.log(err) );
+        return result;
       }
     }
   })
