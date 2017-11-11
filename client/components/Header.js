@@ -37,7 +37,7 @@ class Header extends Component {
       <nav>
         <div className="nav-wrapper">
           <Link to="/" className="brand-logo left">
-            Home
+            onBurping
           </Link>
           <ul className="right">
             {this.renderButtons()}

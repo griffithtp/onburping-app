@@ -1,10 +1,18 @@
+const axios = require('axios');
 const graphql = require('graphql');
 const {
   GraphQLObjectType,
-  GraphQLString
+  GraphQLString,
+  GraphQLInt,
+  GraphQLList
 } = graphql;
+const { api_url, api_key, brex_api_key, brex_api_url } = require('config.json')('./apikey-demo.json');
+
 const UserType = require('./types/user_type');
 const AuthService = require('../services/auth');
+
+const CompanySearchType = require('./types/brex_company_search_type');
+const CompanyDetailsType = require('./types/brex_company_details_type');
 
 const mutation = new GraphQLObjectType({
   name: 'Mutation',
