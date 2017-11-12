@@ -32,12 +32,16 @@ class Dashboard extends Component
       variables: { country: country, registrationNumber: registrationNumber, limit: limit }
       //refetchQueries: [{}]
     }).then( (res) => {
-      if (res.data.companysearch.length > 0) {
+      // console.log(res.data.companysearch);
+      if (res.data.companysearch) {
+        // this.setState({burping: false});
         hashHistory.push(`/company/${res.data.companysearch[0].id}`);
+      } else {
+        this.setState({ errors: ["company not found"], burping: false });
       }
     }).catch( res => {
       const errors = rest.graphQLErrors.map( error => error.message);
-      this.setState({ errors });
+      this.setState({ errors, burping: false });
     })
   }
 

@@ -29,6 +29,7 @@ export default gql`
           address
         }
       }
+      shareholders
     }
   }
 `;
