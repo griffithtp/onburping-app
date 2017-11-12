@@ -7,13 +7,14 @@ import mutation from '../mutations/CompanySearch';
 
 import CompanySearchForm from './CompanySearchForm';
 import CompanyList from './CompanyList';
+import Loading from './Loading';
 
 class Dashboard extends Component
 {
   constructor(props) {
     super(props);
 
-    this.state = { errors: []};
+    this.state = { errors: [], burping: false};
   }
 
   // componentWillUpdate(nextProps) {
@@ -26,7 +27,7 @@ class Dashboard extends Component
   // }
 
   onSubmit({country, registrationNumber, limit}) {
-    console.log(registrationNumber);
+    this.setState({burping: true});
     this.props.mutate({
       variables: { country: country, registrationNumber: registrationNumber, limit: limit }
       //refetchQueries: [{}]
@@ -45,9 +46,10 @@ class Dashboard extends Component
 
     return (
       <div>
+        <Loading burping={ this.state.burping } />
         <CompanySearchForm
-          errors={this.state.errors}
-          onSubmit={this.onSubmit.bind(this)}
+          errors={ this.state.errors }
+          onSubmit={ this.onSubmit.bind(this) }
           />
         {/* <CompanyList /> */}
       </div>
