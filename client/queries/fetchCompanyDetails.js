@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  query fetchCompanyDetails($id:String, $dataset: String = "full") {
+  query fetchCompanyDetails($id: String, $dataset: String = "full") {
     company(id: $id, dataset: $dataset) {
       country
       id

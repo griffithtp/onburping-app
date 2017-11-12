@@ -9,6 +9,7 @@ const PartnerType = require('./partner_type');
 
 const CompanySearchType = require('./brex_company_search_type');
 const CompanyDetailsType = require('./brex_company_details_type');
+const CompanyProductType = require('./brex_products_type');
 const brex_headers = {
   headers: {'Content-Type': 'application/json'
   , 'Accept': 'application/json', 'user_key': `${brex_api_key}`}
@@ -91,6 +92,21 @@ const RootQueryType = new GraphQLObjectType({
           .then( (res) => {
             // console.log(res.data);
             return {...res.data, ...Shareholders};
+          })
+          .catch( err => console.log(err) );
+        return result;
+      }
+    },
+    companyproducts: {
+      type: new GraphQLList(CompanyProductType),
+      args: {
+        id: { type: GraphQLString },
+      },
+      resolve(parentValue, { id }, req) {
+        const result = axios.get(brex_api_url + `api/v1/product/search/${id}`, brex_headers)
+          .then( (res) => {
+            // console.log(res.data);
+            return res.data;
           })
           .catch( err => console.log(err) );
         return result;
