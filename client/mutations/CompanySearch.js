@@ -1,12 +1,14 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  mutation companysearch($country:String, $name:String, $limit: Int) {
-    companysearch(country: $country, name:$name, limit:$limit) {
+  mutation companysearch($registrationNumber:String, $country:String, $limit: Int){
+    companysearch(country: $country, registrationNumber: $registrationNumber, limit: $limit) {
       id
-      country
       registrationNumber
       name
+      country
+      address
+      status
     }
   }
 `;

@@ -8,6 +8,11 @@ const {
 } = graphql;
 const { api_url, api_key, brex_api_key, brex_api_url } = require('config.json')('./apikey-demo.json');
 
+const brex_headers = {
+  headers: {'Content-Type': 'application/json'
+  , 'Accept': 'application/json', 'user_key': `${brex_api_key}`}
+};
+
 const UserType = require('./types/user_type');
 const AuthService = require('../services/auth');
 
@@ -61,14 +66,14 @@ const mutation = new GraphQLObjectType({
       }
     },
     companysearch: {
-      type: new GraphQLList(CompanySearchType),
+      type: new GraphQLList(CompanyDetailsType),
       args: {
         country: { type: GraphQLString },
-        id: { type: GraphQLString },
+        registrationNumber: { type: GraphQLString },
         limit: { type: GraphQLInt }
       },
-      resolve(parentValue, { country, name, limit}, req) {
-        return axios.get(brex_api_url + `api/v1/company/search/number/${country}/${id}?limit=1`, brex_headers)
+      resolve(parentValue, { country, registrationNumber, limit}, req) {
+        return axios.get(brex_api_url + `api/v1/company/search/number/${country}/${registrationNumber}?limit=1`, brex_headers)
           .then( (res) => {
             return res.data;
           })

@@ -1,32 +1,25 @@
 import React, { Component } from 'react';
-import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
-
-import mutation from '../mutations/CompanySearch';
+// import gql from 'graphql-tag';
+// import { graphql } from 'react-apollo';
+import { Link, hashHistory} from 'react-router';
 
 class CompanySearchForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { result: '', country: 'UK', company: 'lloyds', limit: 9};
+    this.state = { country: 'UK', registrationNumber: '02019697', limit: 9};
   }
 
-  onSearchSubmit(event){
+  onSubmit(event){
     event.preventDefault();
 
-    this.props.mutate({
-      variables: {
-        country: this.state.country,
-        name: this.state.company,
-        limit: this.state.limit
-      }
-    });
+    this.props.onSubmit(this.state);
   }
 
   render() {
     return(
       <div className="row">
-        <form onSubmit={this.onSearchSubmit.bind(this)} className="col s4">
+        <form onSubmit={this.onSubmit.bind(this)} className="col s4">
           <div className="input-field">
             <input placeholder="Country Code"
               value={this.state.country}
@@ -34,16 +27,22 @@ class CompanySearchForm extends Component {
             />
           </div>
           <div className="input-field">
-            <input placeholder="Company Name"
-              value={this.state.name}
-              onChange={e => this.setState({name: e.target.value})}
+            <input placeholder="registrationNumber"
+              value={this.state.registrationNumber}
+              onChange={e => this.setState({registrationNumber: e.target.value})}
             />
           </div>
-          <button className="btn">Search</button>
+
+          <div className="errors">
+            {this.props.errors.map(error => <div key={error}>{error}</div>)}
+          </div>
+
+          <button className="btn">Burp it!</button>
+          {/* <Link to="/company/05C45F7F6AB6BC73BD6E776408C2BC85">Test</Link> */}
         </form>
       </div>
     )
   }
 }
 
-export default graphql(mutation)(CompanySearchForm);
+export default CompanySearchForm;
