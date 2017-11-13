@@ -13,7 +13,7 @@ class Dashboard extends Component
 {
   constructor(props) {
     super(props);
-
+// console.log(props);
     this.state = { errors: [], burping: false};
   }
 
@@ -32,15 +32,14 @@ class Dashboard extends Component
       variables: { country: country, registrationNumber: registrationNumber, limit: limit }
       //refetchQueries: [{}]
     }).then( (res) => {
-      // console.log(res.data.companysearch);
-      if (res.data.companysearch) {
-        // this.setState({burping: false});
+      if (res.data.companysearch.length) {
         hashHistory.push(`/company/${res.data.companysearch[0].id}`);
       } else {
         this.setState({ errors: ["company not found"], burping: false });
       }
     }).catch( res => {
-      const errors = rest.graphQLErrors.map( error => error.message);
+      console.log(res);
+      const errors = res.graphQLErrors.map( error => error.message);
       this.setState({ errors, burping: false });
     })
   }
@@ -55,7 +54,12 @@ class Dashboard extends Component
           errors={ this.state.errors }
           onSubmit={ this.onSubmit.bind(this) }
           />
-        {/* <CompanyList /> */}
+        <div className="row">
+          05794611
+        </div>
+        <div className="row">
+          01794877
+        </div>
       </div>
     );
   }

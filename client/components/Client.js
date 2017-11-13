@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 
 import fetchCompanyDetails from '../queries/fetchCompanyDetails';
 
-class CompanyDetails extends Component
+class Client extends Component
 {
   render() {
     const { company } = this.props.data;
@@ -52,7 +52,6 @@ class CompanyDetails extends Component
               <div className="card-content white-text">
                 <span className="card-title"></span>
                 <ul>
-                  <li><a href="#!" className="content"><i className="material-icons">location_on</i></a></li>
                   {company.address.map( (address) => {
                     return <li>{address}</li>
                   })}
@@ -64,52 +63,9 @@ class CompanyDetails extends Component
 
         <div className="col s6">
           <ul className="collection with-header">
-            <li className="collection-header"><h4>Managing Directors</h4></li>
-            { company.managingDirectors && company.managingDirectors.map( (d) => {
-              // Hack for now
-              let shield = "material-icons";
-              if (d == "SIR PETER GEORGE OSBORNE") {
-                shield = "material-icons warning";
-              } else if (company.registrationNumber == "01794877") {
-                shield = "material-icons errors";
-              }
-              return (
-                <li className="collection-item">
-                  { d }
-                  <a href="#!" className="secondary-content"><i className={shield}>verified_user</i></a>
-                </li>
-              )
-            })}
+            <li className="collection-header"><h4>Your application is processing</h4></li>
+            <li className="collection-item">Our compliance office will be in touch within 24hours.</li>
           </ul>
-        </div>
-        <div className="col s6">
-          <ul className="collection with-header">
-            <li className="collection-header"><h4>Beneficial Owners</h4></li>
-            { ultimateBeneficialOwner && ultimateBeneficialOwner.map( (b) => {
-              return (
-                <li className="collection-item">{ b.name }</li>
-              )
-            })}
-          </ul>
-        </div>
-        <div className="col s6">
-          <ul className="collection with-header">
-            <li className="collection-header"><h4>Shareholders</h4></li>
-            { company.shareholders && company.shareholders.map( (shareholder) => {
-              return (
-                <li className="collection-item">{ shareholder }</li>
-              )
-            })}
-          </ul>
-        </div>
-
-        <div className="row">
-          <div className="col s6">
-            <ul className="collection with-header">
-              <li className="collection-header"><h4>Products</h4></li>
-
-            </ul>
-          </div>
         </div>
 
       </div>
@@ -121,4 +77,4 @@ export default graphql(fetchCompanyDetails, {
   options: (props) => {
     return { variables: { id: props.params.id }} // dataset is set to 'full' by default from the gql query
   }
-})(CompanyDetails);
+})(Client);

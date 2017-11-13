@@ -14,6 +14,7 @@ class SignupForm extends Component {
 
   componentWillUpdate(nextProps) {
     if (!this.props.data.user && nextProps.data.user) {
+      // quick Hack around to direct to Client page and display message
       hashHistory.push("/dashboard");
     }
   }

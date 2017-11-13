@@ -7,7 +7,7 @@ class CompanySearchForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { country: 'UK', registrationNumber: '02019697', limit: 9};
+    this.state = { country: 'UK', registrationNumber: '09092149', limit: 9};
   }
 
   onSubmit(event){

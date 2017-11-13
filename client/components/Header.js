@@ -35,7 +35,7 @@ class Header extends Component {
   render() {
     return (
       <nav>
-        <div className="nav-wrapper">
+        <div className="nav-wrapper teal lighten-1">
           <Link to="/" className="brand-logo left">
             onBurping
           </Link>
